@@ -7,7 +7,10 @@ import { befores, afters } from './middleware.js';
 
 import getContact from './triggers/project.js';
 
-import createContact from './creates/project.js';
+import createContact from './creates/create-project.js';
+
+
+import createDeleteProject from './creates/delete_project.js';
 
 
 export default defineApp({
@@ -27,6 +30,7 @@ export default defineApp({
   
   // Add your creates here for them to show up!
   creates: {
-    [createContact.key]: createContact
+    [createContact.key]: createContact,
+    [createDeleteProject.key]: createDeleteProject
   },
 });
