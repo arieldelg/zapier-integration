@@ -11,7 +11,14 @@ describe('creates.delete_project', () => {
   it('should run', async () => {
     const bundle = { inputData: {} };
 
-    const results = await appTester(App.creates['delete_project'].operation.perform, bundle);
+    const perform = App.creates.delete_project.operation["perform"];
+    if (!perform) {
+      throw new Error('Perform function is undefined');
+    }
+    if (typeof perform !== 'function') {
+      throw new Error('Perform is not a function');
+    }
+    const results = await appTester(perform, bundle);
     expect(results).toBeDefined();
     // TODO: add more assertions
   });

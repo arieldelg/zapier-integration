@@ -10,9 +10,12 @@ import objects from '../utils/sampleObject.js';
 import { ProjectResponse } from '../types/projects.js';
 
 const perform = (async (z, bundle) => {
+  if (!bundle.inputData.id) {
+    throw new Error('Project ID is required to delete a project.');
+  }
   const response: HttpResponse<ProjectResponse> = await z.request({
     method: 'DELETE',
-    url: `${bundle.authData.base_url}/projects/${bundle.inputData.id}`,
+    url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
   });
   return response.data;
 }) satisfies CreatePerform<InferInputData<typeof inputs.delete>>;

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import zapier from 'zapier-platform-core';
 
 import App from '../../index';
-import ProjectResponse from '../../types/projects';
 
 const appTester = zapier.createAppTester(App);
 // read the `.env` file into the environment, if available
@@ -22,7 +21,7 @@ describe('creates.contact', () => {
     };
 
    
-    const perform = App.creates.project.operation["perform"];
+    const perform = App.creates.create_project.operation["perform"];
     if (!perform) {
       throw new Error('Perform function is undefined');
     }

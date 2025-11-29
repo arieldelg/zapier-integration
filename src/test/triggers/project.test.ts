@@ -2,13 +2,13 @@ import { describe, expect, it } from 'vitest';
 import zapier from 'zapier-platform-core';
 
 import App from '../../index';
-import ProjectResponse from '../../types/projects';
+import {ProjectResponse} from '../../types/projects';
 
 const appTester = zapier.createAppTester(App);
 // read the `.env` file into the environment, if available
 zapier.tools.env.inject();
 
-describe('triggers.contact', () => {
+describe('triggers.project', () => {
   it('should run', async () => {
     const bundle = {
       authData: {
@@ -21,7 +21,7 @@ describe('triggers.contact', () => {
       }
     };
 
-    const results: ProjectResponse[] = await appTester(App.triggers.trigger_project.operation["perform"], bundle);
+    const results: ProjectResponse[] = await appTester(App.triggers.project.operation["perform"], bundle);
     expect(results).toBeDefined();
     expect(Array.isArray(results)).toBe(true);
     if (results.length > 0) {
