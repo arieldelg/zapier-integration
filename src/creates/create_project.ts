@@ -21,8 +21,8 @@ const perform = (async (z, bundle) => {
 }) satisfies CreatePerform<InferInputData<typeof inputFields.create>>;
 
 export default defineCreate({
-  key: 'project' as const,
-  noun: 'Project-Create',
+  key: 'create_project' as const,
+  noun: 'Create-project',
 
   display: {
     label: 'Create Project',

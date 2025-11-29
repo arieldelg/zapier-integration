@@ -1,5 +1,4 @@
 import {
-  defineInputFields,
   defineCreate,
   type CreatePerform,
   type InferInputData,

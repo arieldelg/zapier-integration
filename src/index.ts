@@ -5,9 +5,9 @@ import packageJson from '../package.json' with { type: 'json' };
 import authentication from './authentication.js';
 import { befores, afters } from './middleware.js';
 
-import getContact from './triggers/project.js';
+import triggerProject from './triggers/project.js';
 
-import createContact from './creates/create-project.js';
+import createProject from './creates/create_project.js';
 
 
 import createDeleteProject from './creates/delete_project.js';
@@ -25,12 +25,12 @@ export default defineApp({
 
   // Add your triggers here for them to show up!
   triggers: {
-    [getContact.key]: getContact,
+    [triggerProject.key]: triggerProject,
   },
   
   // Add your creates here for them to show up!
   creates: {
-    [createContact.key]: createContact,
+    [createProject.key]: createProject,
     [createDeleteProject.key]: createDeleteProject
   },
 });
