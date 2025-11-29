@@ -7,7 +7,12 @@ import inputFields from '../types/inputs.js';
 import {ProjectResponse} from '../types/projects.js';
 import objects from '../utils/sampleObject.js';
 
-// triggers on a new contact with a certain tag
+/**
+ * Get projects
+ * @param z Zapier provided utility functions
+ * @param bundle Data bundle containing input data and auth data
+ * @returns An array of project objects
+ */
 const perform = (async (z, bundle) => {
   const queryParams = new URLSearchParams();
 
@@ -29,6 +34,9 @@ const perform = (async (z, bundle) => {
   
 }) satisfies PollingTriggerPerform;
 
+/** * Define the get project operation 
+ * @return Trigger definition for Zapier
+ */
 export default defineTrigger({
 
   key: 'project' as const,

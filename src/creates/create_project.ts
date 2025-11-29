@@ -8,6 +8,12 @@ import inputFields from '../types/inputs.js';
 import {ProjectResponse} from '../types/projects.js';
 import objects from '../utils/sampleObject.js';
 
+/**
+ * Create a new project
+ * @param z Zapier provided utility functions
+ * @param bundle Data bundle containing input data and auth data
+ * @returns The created project object
+ */
 const perform = (async (z, bundle) => {
   const response: HttpResponse<ProjectResponse> = await z.request({
     method: 'POST',
@@ -20,6 +26,10 @@ const perform = (async (z, bundle) => {
   return response.data;
 }) satisfies CreatePerform<InferInputData<typeof inputFields.create>>;
 
+/**
+ * Define the create project operation 
+ * @return Create definition for Zapier
+ */
 export default defineCreate({
   key: 'create_project' as const,
   noun: 'Create-project',

@@ -1,5 +1,11 @@
 import type { ZObject, Bundle, Authentication, HttpResponse } from "zapier-platform-core";
 
+/**
+ * Test the authentication by making a request to the API
+ * @param z Zapier provided utility functions
+ * @param bundle Data bundle containing auth data
+ * @returns The response from the API
+ */
 const test = async (z: ZObject, bundle: Bundle) => {
   const url = bundle.authData.api_base_url;
   if(!url) {
