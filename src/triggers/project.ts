@@ -31,8 +31,8 @@ const perform = (async (z, bundle) => {
 
 export default defineTrigger({
 
-  key: 'trigger_project' as const,
-  noun: 'Trigger-project',
+  key: 'project' as const,
+  noun: 'Project',
   
   display: {
     label: 'Get Project',
