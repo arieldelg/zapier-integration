@@ -25,8 +25,8 @@ export default defineCreate({
   noun: 'Delete-project',
 
   display: {
-    label: 'Create Delete-project',
-    description: 'Creates a new delete-project, probably with input from previous steps.'
+    label: 'Delete Project',
+    description: 'Creates a new delete project, probably with input from previous steps.'
   },
 
   operation: {
