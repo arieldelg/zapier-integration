@@ -1,0 +1,55 @@
+import type { ZObject, Bundle, Authentication, HttpResponse } from "zapier-platform-core";
+
+const test = async (z: ZObject, bundle: Bundle) => {
+  const url = bundle.authData.api_base_url;
+  if(!url) {
+    throw new z.errors.Error(
+      'API Base URL is required for authentication.',
+      'InvalidAuthField'
+    );
+  }
+  if (!/^https:\/\/.+/i.test(url)) {
+    throw new z.errors.Error(
+      'API Base URL must start with "https://".',
+      "InvalidAuthField"
+    );
+  }
+  const stats: HttpResponse<unknown> = await z.request({ url: `${bundle.authData.api_base_url}/projects.json` });
+  
+  if (stats.status === 401 || stats.status === 403) {
+    throw new z.errors.Error(
+      "The API token and/or base URL you supplied is incorrect",
+      "AuthenticationError"
+    );
+  }
+
+  return stats;
+};
+
+export default {
+  // "basic" auth automatically creates "username" and "password" input fields. It
+  // also registers default middleware to create the authentication header.
+  type: "custom" as const,
+
+  // Define any input app's auth requires here. The user will be prompted to enter
+  // this info when they connect their account.
+  fields: [
+    {
+      key: "api_base_url",
+      type: "string",
+      required: true,
+      label: "API Base URL",
+      helpText: "Base URL for API requests, e.g. https://api.wistia.com/v1",
+    },
+    {
+      key: "api_token",
+      type: "string",
+      required: true,
+      label: "API Token",
+      helpText:
+        "Find your API token here: https://arieldelgrande.wistia.com/account/api",
+    },
+  ],
+  test,
+  connectionLabel: "{{bundle.inputData}}",
+} satisfies Authentication;
