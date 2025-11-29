@@ -16,14 +16,30 @@ import { ProjectResponse } from '../types/projects.js';
  * @returns The deleted project object
  */
 const perform = (async (z, bundle) => {
-  if (!bundle.inputData.id) {
-    throw new Error('Project ID is required to delete a project.');
+  try {
+    if (!bundle.inputData.id) {
+      throw new z.errors.Error('Project ID is required to delete a project.', 'MissingProjectID', 400);
+    }
+
+    const response: HttpResponse<ProjectResponse> = await z.request({
+      method: 'DELETE',
+      url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
+    });
+    
+    return response.data;
+  } catch (error: any) {
+
+    if (error instanceof z.errors.Error) {
+      throw error; // Re-throw Zapier errors as is
+    }
+    
+    throw new z.errors.Error(
+      `Failed to delete project: ${error.message}`,
+      'DeleteProjectError',
+      error.status || 500
+    );
   }
-  const response: HttpResponse<ProjectResponse> = await z.request({
-    method: 'DELETE',
-    url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
-  });
-  return response.data;
+  
 }) satisfies CreatePerform<InferInputData<typeof inputs.delete>>;
 
 /** * Define the delete project operation 

@@ -15,16 +15,35 @@ import objects from '../utils/sampleObject.js';
  * @returns The created project object
  */
 const perform = (async (z, bundle) => {
-  const response: HttpResponse<ProjectResponse> = await z.request({
-    method: 'POST',
-    url: `${bundle.authData.api_base_url}/projects`,
-    body: {
-      name: bundle.inputData.name,
-      adminEmail: bundle.inputData.admin_email,
-    },
-  });
-  return response.data;
+  try {
+    if (!bundle.inputData.name || !bundle.inputData.admin_email) {
+      throw new z.errors.Error('Both name and admin email are required to create a project.', 'MissingFields', 400);
+    }
+
+    const response: HttpResponse<ProjectResponse> = await z.request({
+      method: 'POST',
+      url: `${bundle.authData.api_base_url}/projects`,
+      body: {
+        name: bundle.inputData.name,
+        adminEmail: bundle.inputData.admin_email,
+      },
+    });
+    
+    return response.data;
+  } catch (error: any) {
+    if (error instanceof z.errors.Error) {
+      throw error; // Re-throw Zapier errors as is
+    }
+    
+    throw new z.errors.Error(
+      `Failed to create project: ${error}`,
+      'CreateProjectError',
+      error.status || 500
+    );
+  }
 }) satisfies CreatePerform<InferInputData<typeof inputFields.create>>;
+
+
 
 /**
  * Define the create project operation 

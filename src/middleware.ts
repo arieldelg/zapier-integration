@@ -1,16 +1,24 @@
-import type { ZObject, Bundle } from 'zapier-platform-core';
+import { type ZObject, type Bundle } from 'zapier-platform-core';
 
     // This function runs after every outbound request. You can use it to check for
 // errors or modify the response. You can have as many as you need. They'll need
 // to each be registered in your index.js file.
 const handleBadResponses = (response, z: ZObject, bundle: Bundle) => {
-    if (response.status === 401) {
-      throw new z.errors.Error(
-    "The username and/or password you supplied is incorrect",
-    "AuthenticationError",
-    response.status
+  if (response.status === 401) {
+    throw new z.errors.Error(
+  "The username and/or password you supplied is incorrect",
+  "AuthenticationError",
+  response.status
   )
-    }
+  } else if (response.status >= 300) {
+    throw new z.errors.Error(
+      response.data?.error || "An error occurred with the API request",
+      "ResponseError",
+      response.status
+    );
+  }
+  
+
 
 return response
 }

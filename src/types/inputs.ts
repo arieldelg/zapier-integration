@@ -25,7 +25,7 @@ const inputFieldsCreate = defineInputFields([
 ]);
 
 const inputFieldsDelete = defineInputFields([
-  { key: 'id', required: true, type: 'integer', label: 'Project ID', dynamic: 'project.id.name', helpText: 'Select the project to delete.' },
+  { key: 'id', required: true, type: 'integer', label: 'Project ID', helpText: 'Select the project to delete.' },
 ]);
   
 export default {

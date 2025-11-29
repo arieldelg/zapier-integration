@@ -14,23 +14,36 @@ import objects from '../utils/sampleObject.js';
  * @returns An array of project objects
  */
 const perform = (async (z, bundle) => {
-  const queryParams = new URLSearchParams();
-
-  if (bundle.inputData.page) {
-    queryParams.append('page', bundle.inputData.page.toString());
+  try {
+    const queryParams = new URLSearchParams();
+  
+    if (bundle.inputData.page) {
+      queryParams.append('page', bundle.inputData.page.toString());
+    }
+    if (bundle.inputData.per_page) {
+      queryParams.append('per_page', bundle.inputData.per_page.toString());
+    }
+  
+    const response: HttpResponse<ProjectResponse[]> = await z.request({
+      url: `${bundle.authData.api_base_url}/projects?${queryParams.toString()}`,
+    });
+   
+    return response.data.map(project => ({
+      ...project,
+      id: project.id.toString(),
+    }));
+    
+  } catch (error: any) {
+    if (error instanceof z.errors.Error) {
+      throw error; // Re-throw Zapier errors as is
+    }
+    
+    throw new z.errors.Error(
+      `Failed to fetch projects: ${error}`,
+      'FetchProjectsError',
+      error.status || 500
+    );
   }
-  if (bundle.inputData.per_page) {
-    queryParams.append('per_page', bundle.inputData.per_page.toString());
-  }
-
-  const response: HttpResponse<ProjectResponse[]> = await z.request({
-    url: `${bundle.authData.api_base_url}/projects?${queryParams.toString()}`,
-  });
- 
-  return response.data.map(project => ({
-    ...project,
-    id: project.id.toString(),
-  }));
   
 }) satisfies PollingTriggerPerform;
 

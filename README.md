@@ -12,6 +12,7 @@ This project is a Zapier integration for the [Wistia API](https://wistia.com/sup
 **Supported Use Cases:**
 - **Trigger:** Detect when a new Wistia project is created (polling trigger).
 - **Action:** Create a new Wistia project with a specified name and admin email.
+- **Action:** Delete a Wistia project by selecting from a dynamic dropdown of existing projects.
 
 These features allow users to automate tasks such as syncing new Wistia projects to other systems or programmatically creating projects from other apps.
 
@@ -22,6 +23,7 @@ These features allow users to automate tasks such as syncing new Wistia projects
 - **Polling Triggers:** The integration uses polling to detect new projects, which may introduce a delay compared to webhooks but is simpler and more reliable for the Wistia API.
 - **Minimal Field Exposure:** Only essential fields for project creation and retrieval are exposed to keep the integration simple and focused.
 - **Custom Auth:** Chose custom authentication to support API token and base URL flexibility, rather than hardcoding for a single Wistia instance.
+- **Dynamic Dropdown for Deletion:** Added a dynamic dropdown for project selection in the delete action to improve user experience, as recommended by Zapier best practices.
 
 ---
 
@@ -31,6 +33,7 @@ These features allow users to automate tasks such as syncing new Wistia projects
 - **Stable API:** Assumes the Wistia API endpoints and response formats are stable and follow the documented structure.
 - **Base URL:** Assumes all users will use the standard Wistia API base URL (`https://api.wistia.com/v1`), but allows for custom domains if needed.
 - **Email Validity:** Assumes the provided admin email for project creation is valid and accepted by Wistia.
+- **Project Existence:** Assumes the project selected for deletion exists and the user has permission to delete it.
 
 ---
 
