@@ -1,7 +1,7 @@
 export interface ProjectResponse {
-  id: number;
+  id: string;
   name: string;
-  description: string | null;
+  description: string;
   mediaCount: number;
   created: string;
   updated: string;
@@ -12,4 +12,10 @@ export interface ProjectResponse {
   publicId: string;
 }
 
-export default ProjectResponse;
+export interface OutputField {
+  key: string;
+  label: string;
+  type: 'string' | 'integer' | 'boolean' | 'number';
+  helpText?: string;
+  required?: boolean;
+}

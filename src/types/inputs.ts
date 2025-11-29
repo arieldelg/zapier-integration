@@ -23,7 +23,13 @@ const inputFieldsCreate = defineInputFields([
   { key: 'name', required: true },
   { key: 'admin_email', label: 'Admin Email', required: true },
 ]);
+
+const inputFieldsDelete = defineInputFields([
+  { key: 'id', required: true, type: 'integer', label: 'Project ID' },
+]);
+  
 export default {
     trigger: inputFieldsTrigger,
-    create: inputFieldsCreate
+    create: inputFieldsCreate,
+    delete: inputFieldsDelete
 }
