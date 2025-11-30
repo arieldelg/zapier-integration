@@ -2,6 +2,7 @@
 
 This project is a Zapier integration for the [Wistia API](https://wistia.com/support/developers/data-api), enabling users to automate workflows involving Wistia projects. The integration was bootstrapped with the `zapier init` CLI and extended to support core project management use cases.
 
+> **Note:** OAuth2 is not available for all accounts. This integration uses custom authentication with an API token to ensure compatibility for all users.
 ---
 
 ## a. High-Level Description & Supported Use Cases
