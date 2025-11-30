@@ -58,3 +58,6 @@ zapier test
 
 - [Wistia API Docs](https://wistia.com/support/developers/data-api)
 - [Zapier Platform Docs](https://platform.zapier.com/docs)
+
+## App Link
+- [Wistia Zapier Integration on Zapier](https://developer.zapier.com/app/233748/version/1.0.0)
