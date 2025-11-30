@@ -3,7 +3,7 @@ import zapier from 'zapier-platform-core';
 
 import App from '../../index';
 import {ProjectResponse} from '../../types/projects';
-import handleRateLimits from '../../utils/rateLimit';
+import {handleRateLimits} from '../../utils/rateLimit';
 
 const appTester = zapier.createAppTester(App);
 // read the `.env` file into the environment, if available
