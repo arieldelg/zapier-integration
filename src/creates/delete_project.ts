@@ -2,13 +2,9 @@ import {
   defineCreate,
   type CreatePerform,
   type InferInputData,
-  HttpResponse,
 } from 'zapier-platform-core';
-
-import inputs from '../types/inputs.js';
-import objects from '../utils/sampleObject.js';
-import { ProjectResponse } from '../types/projects.js';
-import handleRateLimits from '../utils/rateLimit.js';
+import { ProjectResponse, inputDelete,  } from '../types/index.js';
+import {makeApiRequest, sampleObject, outputFields} from '../utils/index.js';
 
 /**
  * Delete a project
@@ -22,18 +18,18 @@ const perform = (async (z, bundle) => {
       throw new z.errors.Error('Project ID is required to delete a project.', 'MissingProjectID', 400);
     }
 
-    const response: HttpResponse<ProjectResponse> = await handleRateLimits(() =>
-      z.request({
-        method: 'DELETE',
-        url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
-      })
-    );
+    const response = await makeApiRequest<ProjectResponse>({
+      z,
+      bundle,
+      method: 'DELETE',
+      endpoint: `/projects/${bundle.inputData.id}`,
+    });
 
     return response.data;
   } catch (error: any) {
 
     if (error instanceof z.errors.Error) {
-      throw error; // Re-throw Zapier errors as is
+      throw error; 
     }
     
     throw new z.errors.Error(
@@ -43,7 +39,7 @@ const perform = (async (z, bundle) => {
     );
   }
   
-}) satisfies CreatePerform<InferInputData<typeof inputs.delete>>;
+}) satisfies CreatePerform<InferInputData<typeof inputDelete>>;
 
 /** * Define the delete project operation 
  * @return Create definition for Zapier
@@ -59,8 +55,8 @@ export default defineCreate({
 
   operation: {
     perform,
-    inputFields: inputs.delete,
-    sample: { ...objects.sampleObject },
-    outputFields: objects.outputFields,
+    inputFields: inputDelete,
+    sample: { ...sampleObject },
+    outputFields: outputFields,
   },
 });

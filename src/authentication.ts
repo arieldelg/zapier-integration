@@ -33,12 +33,7 @@ const test = async (z: ZObject, bundle: Bundle) => {
 };
 
 export default {
-  // "basic" auth automatically creates "username" and "password" input fields. It
-  // also registers default middleware to create the authentication header.
   type: "custom" as const,
-
-  // Define any input app's auth requires here. The user will be prompted to enter
-  // this info when they connect their account.
   fields: [
     {
       key: "api_base_url",

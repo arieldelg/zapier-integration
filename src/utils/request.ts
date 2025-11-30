@@ -1,7 +1,17 @@
 import { HttpResponse } from "zapier-platform-core";
-import ApiRequestOptions from "../types/request.js";
-import handleRateLimits from "./rateLimit.js";
+import { ApiRequestOptions } from "../types/request.js";
+import { handleRateLimits } from "./rateLimit.js";
 
+/**
+ * Makes an API request to the specified endpoint with rate limit handling.
+ * @param z Zapier provided utility functions
+ * @param bundle Data bundle containing input data and auth data
+ * @param method HTTP method (GET, POST, DELETE, etc.)
+ * @param endpoint API endpoint to call
+ * @param body Optional request body for POST/PUT requests
+ * @param params Optional query parameters for GET requests
+ * @returns The HTTP response from the API
+ */
 export async function makeApiRequest<T>({
   z,
   bundle,

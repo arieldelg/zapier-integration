@@ -2,7 +2,7 @@ import {
   defineInputFields,
 } from "zapier-platform-core";
 
-const inputFieldsTrigger = defineInputFields([
+export const inputFieldsTrigger = defineInputFields([
     {
         key: "page",
         required: true,
@@ -19,17 +19,12 @@ const inputFieldsTrigger = defineInputFields([
     }
 ]);
 
-const inputFieldsCreate = defineInputFields([
+export const inputFieldsCreate = defineInputFields([
   { key: 'name', required: true },
   { key: 'admin_email', label: 'Admin Email', required: true },
 ]);
 
-const inputFieldsDelete = defineInputFields([
+export const inputFieldsDelete = defineInputFields([
   { key: 'id', required: true, type: 'integer', label: 'Project ID', helpText: 'Select the project to delete.' },
 ]);
   
-export default {
-    trigger: inputFieldsTrigger,
-    create: inputFieldsCreate,
-    delete: inputFieldsDelete
-}

@@ -1,6 +1,6 @@
 import { Bundle, ZObject } from "zapier-platform-core";
 
-interface ApiRequestOptions {
+export interface ApiRequestOptions {
   z: ZObject;
   bundle: Bundle;
   method?: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
@@ -8,5 +8,3 @@ interface ApiRequestOptions {
   body?: Record<string, unknown>;
   params?: Record<string, string | number>;
 }
-
-export default ApiRequestOptions

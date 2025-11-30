@@ -1,6 +1,6 @@
 import {ProjectResponse, OutputField} from '../types/projects.js';
 
-const sampleObject: ProjectResponse = {
+export const sampleObject: ProjectResponse = {
       id: "10261322",
       name: "photos",
       description: "Get started by adding a video to your folder - you can always delete it later!",
@@ -14,7 +14,7 @@ const sampleObject: ProjectResponse = {
       publicId: "gxkc956dhe"
     };
 
-const outputFields: OutputField[] = [
+export const outputFields: OutputField[] = [
       { key: 'id', label: 'ID' , type: 'string'},
       { key: 'name', label: 'Name', type: 'string' },
       { key: 'description', label: 'Description', type: 'string' },
@@ -28,4 +28,3 @@ const outputFields: OutputField[] = [
       { key: 'publicId', label: 'Public ID', type: 'string' },
     ]
 
-export default { sampleObject, outputFields };

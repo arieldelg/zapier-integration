@@ -1,12 +1,9 @@
 import {
   defineTrigger,
-  HttpResponse,
   type PollingTriggerPerform,
 } from 'zapier-platform-core';
-import inputFields from '../types/inputs.js';
-import {ProjectResponse} from '../types/projects.js';
-import objects from '../utils/sampleObject.js';
-import handleRateLimits from '../utils/rateLimit.js';
+import { ProjectResponse, trigger,  } from '../types/index.js';
+import {makeApiRequest, sampleObject, outputFields} from '../utils/index.js';
 
 /**
  * Get projects
@@ -16,20 +13,16 @@ import handleRateLimits from '../utils/rateLimit.js';
  */
 const perform = (async (z, bundle) => {
   try {
-    const queryParams = new URLSearchParams();
-  
-    if (bundle.inputData.page) {
-      queryParams.append('page', bundle.inputData.page.toString());
-    }
-    if (bundle.inputData.per_page) {
-      queryParams.append('per_page', bundle.inputData.per_page.toString());
-    }
+    const params: Record<string, string> = {};
+    if (bundle.inputData.page) params.page = bundle.inputData.page.toString();
+    if (bundle.inputData.per_page) params.per_page = bundle.inputData.per_page.toString();
 
-    const response: HttpResponse<ProjectResponse[]> = await handleRateLimits(() =>
-      z.request({
-        url: `${bundle.authData.api_base_url}/projects?${queryParams.toString()}`,
-      })
-    );
+    const response = await makeApiRequest<ProjectResponse[]>({
+      z,
+      bundle,
+      endpoint: '/projects',
+      params,
+    });
 
     return response.data.map(project => ({
       ...project,
@@ -38,7 +31,7 @@ const perform = (async (z, bundle) => {
     
   } catch (error: any) {
     if (error instanceof z.errors.Error) {
-      throw error; // Re-throw Zapier errors as is
+      throw error; 
     }
     
     throw new z.errors.Error(
@@ -65,9 +58,9 @@ export default defineTrigger({
   operation: {
     type: 'polling',
     perform: perform,
-    inputFields: inputFields.trigger,
-    sample: {...objects.sampleObject},
+    inputFields: trigger,
+    sample: {...sampleObject},
 
-    outputFields: objects.outputFields,
+    outputFields: outputFields,
   },
 });
