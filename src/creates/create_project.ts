@@ -7,7 +7,7 @@ import {
 import inputFields from '../types/inputs.js';
 import {ProjectResponse} from '../types/projects.js';
 import objects from '../utils/sampleObject.js';
-
+import handleRateLimits from '../utils/rateLimit.js';
 /**
  * Create a new project
  * @param z Zapier provided utility functions
@@ -20,15 +20,17 @@ const perform = (async (z, bundle) => {
       throw new z.errors.Error('Both name and admin email are required to create a project.', 'MissingFields', 400);
     }
 
-    const response: HttpResponse<ProjectResponse> = await z.request({
-      method: 'POST',
-      url: `${bundle.authData.api_base_url}/projects`,
-      body: {
-        name: bundle.inputData.name,
-        adminEmail: bundle.inputData.admin_email,
-      },
-    });
-    
+    const response: HttpResponse<ProjectResponse> = await handleRateLimits(() =>
+      z.request({
+        method: 'POST',
+        url: `${bundle.authData.api_base_url}/projects`,
+        body: {
+          name: bundle.inputData.name,
+          adminEmail: bundle.inputData.admin_email,
+        },
+      })
+    );
+
     return response.data;
   } catch (error: any) {
     if (error instanceof z.errors.Error) {
@@ -42,8 +44,6 @@ const perform = (async (z, bundle) => {
     );
   }
 }) satisfies CreatePerform<InferInputData<typeof inputFields.create>>;
-
-
 
 /**
  * Define the create project operation 

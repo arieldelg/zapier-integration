@@ -8,6 +8,7 @@ import {
 import inputs from '../types/inputs.js';
 import objects from '../utils/sampleObject.js';
 import { ProjectResponse } from '../types/projects.js';
+import handleRateLimits from '../utils/rateLimit.js';
 
 /**
  * Delete a project
@@ -21,11 +22,13 @@ const perform = (async (z, bundle) => {
       throw new z.errors.Error('Project ID is required to delete a project.', 'MissingProjectID', 400);
     }
 
-    const response: HttpResponse<ProjectResponse> = await z.request({
-      method: 'DELETE',
-      url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
-    });
-    
+    const response: HttpResponse<ProjectResponse> = await handleRateLimits(() =>
+      z.request({
+        method: 'DELETE',
+        url: `${bundle.authData.api_base_url}/projects/${bundle.inputData.id}`,
+      })
+    );
+
     return response.data;
   } catch (error: any) {
 
